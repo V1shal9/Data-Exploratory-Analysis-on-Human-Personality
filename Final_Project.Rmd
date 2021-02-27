@@ -1,0 +1,47 @@
+---
+title: "Final_Project"
+author: "Vishal Goyal"
+date: "11/7/2020"
+output: html_document
+---
+
+```{r}
+require(tidyverse)
+personalitymoviegrader=read.csv(url("https://raw.githubusercontent.com/V1shal9/DataScience_Dataset_Personality/main/2018-personality-data.csv"))
+```
+```{r}
+glimpse(personalitymoviegrader)
+```
+```{r}
+ggplot(data = personalitymoviegrader, mapping = aes(x = Avg_Movie_Rating)) +
+geom_histogram()
+```
+
+```{r}
+ggplot(personalitymoviegrader, aes(is_personalized,Avg_Movie_Rating,color=enjoy_watching)) +geom_point()
+```
+
+```{r}
+ggplot(personalitymoviegrader, aes(Avg_Movie_Rating,assigned.condition, color=assigned.metric,alpha=0.1)) +geom_jitter()+ facet_grid(.~assigned.metric)
+```
+
+```{r}
+ggplot(data = personalitymoviegrader, mapping = aes(y = openness, x = Avg_Movie_Rating,alpha=0.1)) +geom_jitter()
+ggplot(data = personalitymoviegrader, mapping = aes(y = agreeableness, x = Avg_Movie_Rating,alpha=0.1)) +geom_jitter()
+ggplot(data = personalitymoviegrader, mapping = aes(y = emotional_stability, x = Avg_Movie_Rating,alpha=0.1)) +geom_jitter()
+ggplot(data = personalitymoviegrader, mapping = aes(y = conscientiousness, x = Avg_Movie_Rating,alpha=0.1)) +geom_jitter()
+ggplot(data = personalitymoviegrader, mapping = aes(y = extraversion, x = Avg_Movie_Rating,alpha=0.1)) +geom_jitter()
+```
+
+```{r}
+ggplot(data = personalitymoviegrader, mapping = aes(x = enjoy_watching,fill=factor(emotional_stability) )) +
+geom_bar()
+```
+
+#Percentage of Open personality(>6) people giving good rating(>4)) from dataset.
+```{r}
+personalitymoviegrader %>% filter(openness>6)  %>% summarise(percent_rank=sum(Avg_Movie_Rating>4)*100/n()) 
+```
+
+
+
